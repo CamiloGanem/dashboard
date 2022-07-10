@@ -6,7 +6,7 @@ import plotly.express as px
 
 
 read_col = ['AÑO','DEPARTAMENTO','MUNICIPIO','APROBACIÓN', 'APROBACIÓN_TRANSICIÓN', 'APROBACIÓN_PRIMARIA', 'APROBACIÓN_SECUNDARIA', 'APROBACIÓN_MEDIA']
-df = pd.read_csv("D:\Diplomado/MEN_ESTADISTICAS_EN_EDUCACION_EN_PREESCOLAR__B_SICA_Y_MEDIA_POR_MUNICIPIO_LIMPIO.csv" , usecols=read_col)  
+df = pd.read_csv("https://raw.githubusercontent.com/JJPC98/DiplomadoPython/main/MEN_ESTADISTICAS_EN_EDUCACION_EN_PREESCOLAR__B_SICA_Y_MEDIA_POR_MUNICIPIO_LIMPIO.csv" , usecols=read_col)  
 
 # Using object notation
 genre_bar = st.sidebar.radio(
