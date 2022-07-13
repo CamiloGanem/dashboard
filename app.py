@@ -18,7 +18,7 @@ def hacer_request_api(tipo_aprobacion, years):
 
     data_cleaned = str(request_data).replace("'", '"')
 
-    url_api = "https://api-diplomadopython.herokuapp.com/predict"
+    url_api = "https://apiaprobacion.herokuapp.com/predict"
 
     pred = requests.post(url=url_api, data=data_cleaned).text
 
