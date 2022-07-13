@@ -63,19 +63,19 @@ class APIModelBackEnd:
 
     def _cargar_modelo(self, tipo_apro:int):
         if tipo_apro == 0:#Aprobacion general
-          self.model = joblib.load("./drive/MyDrive/Diplomado/Modulo 5/aprobacion_general.pkl")
+          self.model = joblib.load("aprobacion_general.pkl")
 
         elif tipo_apro == 1:#Aprobacion media
-          self.model = joblib.load("./drive/MyDrive/Diplomado/Modulo 5/aprobacion_media.pkl")
+          self.model = joblib.load("aprobacion_media.pkl")
 
         elif tipo_apro == 2:#Aprobacion primaria
-           self.model = joblib.load("./drive/MyDrive/Diplomado/Modulo 5/aprobacion_primaria.pkl")
+           self.model = joblib.load("aprobacion_primaria.pkl")
 
         elif tipo_apro == 3:#Aprobacion secundaria
-           self.model = joblib.load("./drive/MyDrive/Diplomado/Modulo 5/aprobacion_secundaria.pkl")
+           self.model = joblib.load("aprobacion_secundaria.pkl")
 
         else:#Aprobacion transicion
-          self.model = joblib.load("./drive/MyDrive/Diplomado/Modulo 5/aprobacion_transicion.pkl")
+          self.model = joblib.load("aprobacion_transicion.pkl")
 
     def _preparar_datos(self):
         years = self.years
