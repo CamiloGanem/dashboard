@@ -42,7 +42,7 @@ class OutputModelo(BM):
     """
 
     fecha: date = Field()
-    aprobacion: float = Field(ge=0, le=1)
+    aprobacion: float = Field(ge=40.123323, le=100.000000)
 
     class Config:
         scheme_extra = {
@@ -55,13 +55,13 @@ class OutputModelo(BM):
 class APIModelBackEnd:
     def __init__(
         self,
-        years,
         tipo_aprobacion,
+        years,
     ):
         self.tipo_aprobacion = tipo_aprobacion
         self.years = years
 
-    def _cargar_modelo(self, tipo_apro:int):
+    def _cargar_modelo(self, tipo_apro:int = tipo_aprobacion):
         if tipo_apro == 0:#Aprobacion general
           self.model = joblib.load("./drive/MyDrive/Diplomado/Modulo 5/aprobacion_general.pkl")
 
