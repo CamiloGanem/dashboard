@@ -1,2 +1,3 @@
 slowapi==0.1.5
 ppscore==1.2.0
+SQLite3
