@@ -82,7 +82,7 @@ class APIModelBackEnd:
         return years
     
     def predecir(self, y_name="aprobacion"):
-        self._cargar_modelo()
+        self._cargar_modelo(1)
         x = self._preparar_datos()
         prediction = pd.DataFrame(self.model.predict_proba(x)[:, 1]).rename(
             columns={0: y_name}
