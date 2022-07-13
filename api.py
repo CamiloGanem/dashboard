@@ -7,10 +7,6 @@ Original file is located at
     https://colab.research.google.com/drive/1cZrM_fLaUN6s0FyL-Ets1kGUj0a_7qbr
 """
 
-!pip install FastAPI -q
-
-!cp /content/drive/MyDrive/Colab\ Notebooks/clases.py /content
-
 from fastapi import FastAPI
 from typing import List
 from clases import OutputModelo, InputModelo, APIModelBackEnd
