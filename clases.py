@@ -61,7 +61,7 @@ class APIModelBackEnd:
         self.tipo_aprobacion = tipo_aprobacion
         self.years = years
 
-    def _cargar_modelo(self, tipo_apro:int = tipo_aprobacion):
+    def _cargar_modelo(self, tipo_apro:int):
         if tipo_apro == 0:#Aprobacion general
           self.model = joblib.load("./drive/MyDrive/Diplomado/Modulo 5/aprobacion_general.pkl")
 
