@@ -9,6 +9,7 @@ Original file is located at
 
 from pydantic import BaseModel as BM
 from pydantic import Field
+from typing import Literal
 from datetime import datetime
 import joblib
 import pandas as pd
@@ -23,7 +24,7 @@ class InputModelo(BM):
     """
     Clase que define las entradas del modelo según las verá el usuario.
     """
-    tipo_aprobacion: int = Field(ge = 0, le = 4)
+    tipo_aprobacion: Literal["Aprobacion general", "Aprobacion media", "Aprobacion primaria", "Aprobacion secundaria","Aprobacion transicion"]
     years: int = Field(
         ge=1, le=3, description="Años futuros"
     )
@@ -31,7 +32,7 @@ class InputModelo(BM):
     class Config:
         schema_extra = {
             "example": {
-                "tipo_aprobacion": 1,
+                "tipo_aprobacion": "Aprobacion general",
                 "years": 1
             }
         }
@@ -63,16 +64,16 @@ class APIModelBackEnd:
         self.years = years
 
     def _cargar_modelo(self, tipo_apro:int):
-        if tipo_apro == 0:#Aprobacion general
+        if tipo_apro == "Aprobacion general":#Aprobacion general
           self.model = joblib.load("aprobacion_general.pkl")
 
-        elif tipo_apro == 1:#Aprobacion media
+        elif tipo_apro == "Aprobacion media":#Aprobacion media
           self.model = joblib.load("aprobacion_media.pkl")
 
-        elif tipo_apro == 2:#Aprobacion primaria
+        elif tipo_apro == "Aprobacion primaria":#Aprobacion primaria
            self.model = joblib.load("aprobacion_primaria.pkl")
 
-        elif tipo_apro == 3:#Aprobacion secundaria
+        elif tipo_apro == "Aprobacion secundaria":#Aprobacion secundaria
            self.model = joblib.load("aprobacion_secundaria.pkl")
 
         else:#Aprobacion transicion
