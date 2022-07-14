@@ -84,7 +84,8 @@ class APIModelBackEnd:
     def predecir(self, y_name="aprobacion"):
         self._cargar_modelo(1)
         x = self._preparar_datos()
-        prediction = pd.DataFrame(self.model.predict_proba(x)[:, 1]).rename(
-            columns={0: y_name}
+        prediction = pd.DataFrame(self.model.forecast(x)).rename(
+            columns={0: fecha,
+                     1: aprobacion}
         )
         return prediction.to_dict(orient="records")
