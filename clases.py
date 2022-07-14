@@ -63,7 +63,7 @@ class APIModelBackEnd:
         self.tipo_aprobacion = tipo_aprobacion
         self.years = years
 
-    def _cargar_modelo(self, tipo_apro:int):
+    def _cargar_modelo(self, tipo_apro:str):
         if tipo_apro == "Aprobacion general":#Aprobacion general
           self.model = joblib.load("aprobacion_general.pkl")
 
