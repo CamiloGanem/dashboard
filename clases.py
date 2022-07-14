@@ -47,8 +47,8 @@ class OutputModelo(BM):
     class Config:
         scheme_extra = {
             "example": {
-                "years": 2021-1-1,
-                "aprobacion": 90.374421
+                "years": [2021-1-1],
+                "aprobacion": [90.374421]
                 
             }
           
