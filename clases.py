@@ -45,13 +45,13 @@ class OutputModelo(BM):
     aprobacion: float = Field(ge=40.123323, le=100.000000)
 
     class Config:
-        scheme_extra = {[
+        scheme_extra = {
             "example": {
                 "years": 2021-1-1,
                 "aprobacion": 90.374421
                 
             }
-            ]
+          
         }
 
 class APIModelBackEnd:
