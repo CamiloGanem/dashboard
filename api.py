@@ -39,6 +39,6 @@ async def predict_proba(inputs: List[InputModelo]):
         model = APIModelBackEnd(
             Input.tipo_aprobacion, Input.years
         )
-        response.append(model.predecir())
+        response.append(model.predecir()[0])
     # Retorna  la lista con todas las predicciones hechas.
     return response
