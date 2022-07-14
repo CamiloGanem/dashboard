@@ -9,7 +9,7 @@ Original file is located at
 
 from pydantic import BaseModel as BM
 from pydantic import Field
-from datetime import date
+from datetime import datetime
 import joblib
 import pandas as pd
 
@@ -42,13 +42,13 @@ class OutputModelo(BM):
     """
 
     aprobacion: float = Field(ge=40.123323, le=100.000000)
-    #years: str = Field()
+    years: datetime = Field()
 
     class Config:
         scheme_extra = {
             "example": {
-                "aprobacion": 90.374421
-     #           "years": "2021-1-1"
+                "aprobacion": 90.374421,
+                "years": 2021-1-1
             }
         }
 
@@ -85,7 +85,8 @@ class APIModelBackEnd:
     def predecir(self):
         year, tipo_apro = self._preparar_datos()
         self._cargar_modelo(tipo_apro)
-        prediction = pd.DataFrame(self.model.forecast(year)).rename(
-                                  columns = {0: "aprobacion"}
+        prediction = pd.DataFrame(self.model.forecast(year)).reset_index().rename(
+                                  columns = {"index":"years"
+                                      0: "aprobacion"}
                                  )
         return prediction.to_dict(orient="records")
