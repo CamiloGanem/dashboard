@@ -41,14 +41,14 @@ class OutputModelo(BM):
     Clase que define la salida del modelo según la verá el usuario.
     """
 
-    years: str = Field()
     aprobacion: float = Field(ge=40.123323, le=100.000000)
+    years: str = Field()
 
     class Config:
         scheme_extra = {
             "example": {
-                "year": "2021-1-1",
-                "aprobacion": 90.374421
+                "aprobacion": 90.374421,
+                "years": "2021-1-1"
             }
         }
 
@@ -87,6 +87,6 @@ class APIModelBackEnd:
         self._cargar_modelo(tipo_apro)
         prediction = pd.DataFrame(self.model.forecast(year)).reset_index().rename(
                                   columns = {0: "aprobacion",
-                                            "index": "year"}
+                                            "index": "years"}
                                  )
         return prediction.to_dict(orient="records")
