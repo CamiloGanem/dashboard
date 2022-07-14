@@ -9,7 +9,6 @@ Original file is located at
 
 from pydantic import BaseModel as BM
 from pydantic import Field
-from typing import Literal
 from datetime import datetime
 import joblib
 import pandas as pd
