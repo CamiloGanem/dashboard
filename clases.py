@@ -86,7 +86,7 @@ class APIModelBackEnd:
         year, tipo_apro = self._preparar_datos()
         self._cargar_modelo(tipo_apro)
         prediction = pd.DataFrame(self.model.forecast(year)).reset_index().rename(
-                                  columns = {0: "year",
-                                            "index": "aprobacion"}
+                                  columns = {0: "aprobacion",
+                                            "index": "year"}
                                  )
         return prediction.to_dict(orient="records")
