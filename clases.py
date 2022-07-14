@@ -78,13 +78,14 @@ class APIModelBackEnd:
           self.model = joblib.load("aprobacion_transicion.pkl")
 
     def _preparar_datos(self):
+        tipo_apro = self.tipo_aprobacion
         years = self.years
-        return years
+        return years, tipo_apro
     
-    def predecir(self, tipo_apro:int):
+    def predecir(self):
+        year, tipo_apro = self._preparar_datos()
         self._cargar_modelo(tipo_apro)
-        x = self._preparar_datos()
-        prediction = pd.DataFrame(self.model.forecast(x)).reset_index().rename(
+        prediction = pd.DataFrame(self.model.forecast(year)).reset_index().rename(
                                   columns = {0: "year",
                                             "index": "aprobacion"}
                                  )
