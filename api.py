@@ -26,19 +26,19 @@ app = FastAPI(title="API de Machine Learning del Diplomado", version="1.0.0")
 # Así, la API recibe para hacer multiples predicciones
 
 
-@app.post("/predict", response_model=List[OutputModelo])
-async def predict_proba(inputs: List[InputModelo]):
+@app.post("/predict")
+async def predict_proba(inputs: InputModelo):
     """Endpoint de predicción de la API"""
     # Creamos una lista vacía con las respuestas
-    response = list()
+   
     # Iteramos por todas las entradas que damos
-    for Input in inputs:
-        # Usamos nuestra Clase en el backend para predecir con nuestros inputs.
-        # Esta sería la línea que cambiamos en este archivo, podemos los inputs que necesitemos.
-        # Esto es, poner Input.Nombre_Atributo
-        model = APIModelBackEnd(
-            Input.tipo_aprobacion, Input.years
+    
+    # Usamos nuestra Clase en el backend para predecir con nuestros inputs.
+    # Esta sería la línea que cambiamos en este archivo, podemos los inputs que necesitemos.
+    # Esto es, poner Input.Nombre_Atributo
+    model = APIModelBackEnd(
+           Input.tipo_aprobacion, Input.years
         )
-        response.append(model.predecir()[0])
+    response=model.predecir()
     # Retorna  la lista con todas las predicciones hechas.
     return response
