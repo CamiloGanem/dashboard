@@ -27,7 +27,7 @@ app = FastAPI(title="API de Machine Learning del Diplomado", version="1.0.0")
 
 
 @app.post("/predict")
-async def predict_proba(inputs: InputModelo):
+async def predict_proba(inputs: List[InputModelo]):
     """Endpoint de predicción de la API"""
     # Creamos una lista vacía con las respuestas
    
