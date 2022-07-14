@@ -41,7 +41,7 @@ class OutputModelo(BM):
     Clase que define la salida del modelo según la verá el usuario.
     """
 
-    yaer: str = Field()
+    years: str = Field()
     aprobacion: float = Field(ge=40.123323, le=100.000000)
 
     class Config:
