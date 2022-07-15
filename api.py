@@ -7,10 +7,6 @@ Original file is located at
     https://colab.research.google.com/drive/1cZrM_fLaUN6s0FyL-Ets1kGUj0a_7qbr
 """
 
-from fastapi import FastAPI
-from typing import List
-from clases import OutputModelo, InputModelo, APIModelBackEnd
-
 """API para el diplomado de Python"""
 
 from fastapi import FastAPI
@@ -37,7 +33,7 @@ async def predict_proba(inputs: List[InputModelo]):
     # Esta sería la línea que cambiamos en este archivo, podemos los inputs que necesitemos.
     # Esto es, poner Input.Nombre_Atributo
     model = APIModelBackEnd(
-           Input.tipo_aprobacion, Input.years
+           Inputs.tipo_aprobacion, Inputs.years
         )
     response=model.predecir()
     # Retorna  la lista con todas las predicciones hechas.
