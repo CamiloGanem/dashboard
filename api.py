@@ -23,7 +23,7 @@ app = FastAPI(title="API de Machine Learning del Diplomado", version="1.0.0")
 
 
 @app.post("/predict")
-async def predict_proba(inputs: List[InputModelo]):
+async def predict_proba(inputs: InputModelo):
     """Endpoint de predicción de la API"""
     # Creamos una lista vacía con las respuestas
    
@@ -33,7 +33,7 @@ async def predict_proba(inputs: List[InputModelo]):
     # Esta sería la línea que cambiamos en este archivo, podemos los inputs que necesitemos.
     # Esto es, poner Input.Nombre_Atributo
     model = APIModelBackEnd(
-           Inputs.tipo_aprobacion, Inputs.years
+           inputs.tipo_aprobacion, inputs.years
         )
     response=model.predecir()
     # Retorna  la lista con todas las predicciones hechas.
