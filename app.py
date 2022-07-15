@@ -5,6 +5,14 @@ import pandas as pd
 import plotly.express as px
 import requests
 
+
+st.set_page_config(
+     page_title="DASHBOARD",
+     page_icon="🐽",
+     layout="wide",
+     initial_sidebar_state="expanded"
+ )
+
 @st.cache(allow_output_mutation=True)
 def cargar_datos():
     read_col = ['AÑO','DEPARTAMENTO','MUNICIPIO','APROBACIÓN', 'APROBACIÓN_TRANSICIÓN', 'APROBACIÓN_PRIMARIA', 'APROBACIÓN_SECUNDARIA', 'APROBACIÓN_MEDIA']
@@ -84,59 +92,70 @@ elif genre_bar == 'Exploracion':
     # st.dataframe(df_selection)
     st.title("🔍 Exploración de datos(graficas)") 
 
-    dataframe_depatamento = (
-    df_selection.loc[:,['DEPARTAMENTO','APROBACIÓN']].groupby('DEPARTAMENTO').mean('APROBACIÓN')
-    )
-
-    def fig_pequeña():
-        fig_pequeña = px.bar(
-            dataframe_depatamento,
-            x = "APROBACIÓN",
-            y = dataframe_depatamento.index,
-            orientation = "h",
-            height=700, width=1000,
-            title= "<b> Nivel de aprobación a nivel departamental </b>",
-            color_discrete_sequence = ["#3EC6FF"] * len(dataframe_depatamento),
-            template = "plotly_white"
-        )
-
-        fig_pequeña.update_layout(
-            plot_bgcolor="rgba(0,0,0,0)",
-            xaxis = (dict(showgrid=False)),
-            yaxis={'categoryorder':'total ascending'}
-        )
-
-        fig_pequeña.update_xaxes(automargin=True)
-        return fig_pequeña
-
-    st.plotly_chart(fig_pequeña())
     
-    # AÑO = st.sidebar.multiselect("Selecciona los años:", options=df['AÑO'].unique() , default =df['AÑO'].unique() )
-    # df_selection_año = df.query("AÑO == @AÑO")
 
-    dataframe_año = (
-        df.loc[:,['AÑO','APROBACIÓN']].groupby('AÑO').mean('APROBACIÓN')
-        )
-
-    fig_2 = px.line(
-        dataframe_año,
-        x = dataframe_año.index,
-        y = "APROBACIÓN",
-        # height=600, width=800,
-        title= "<b> Serie de tiempo (aprobación con respecto el año) </b>",
+    dataframe_depatamento = (
+    df_selection.groupby(by=['DEPARTAMENTO']).mean()[['APROBACIÓN']]
+    )
+    
+    fig = px.bar(
+        dataframe_depatamento,
+        x = "APROBACIÓN",
+        y = dataframe_depatamento.index,
+        orientation = "h",
+        height=700, width = 1200,
+        title= "<b> Nivel de aprobación a nivel departamental </b>",
         color_discrete_sequence = ["#3EC6FF"] * len(dataframe_depatamento),
         template = "plotly_white"
-    )
-       
-    fig_2.update_xaxes(
-        rangeslider_visible = True,
-        rangeselector = dict(buttons = list([dict(step = 'year' , stepmode = "backward",count = 1,label = '1 año')])),
-    )
+        )
+
+    fig.update_layout(
+        plot_bgcolor="rgba(0,0,0,0)",
+        xaxis = (dict(showgrid=False)),
+        yaxis={'categoryorder':'total ascending'}
+        )
+
+    fig.update_xaxes(automargin=True)
+
+    dataframe_año = (
+        df.groupby(by=['AÑO']).mean()[['APROBACIÓN','APROBACIÓN_TRANSICIÓN','APROBACIÓN_PRIMARIA','APROBACIÓN_SECUNDARIA', 'APROBACIÓN_MEDIA']]
+        )
+   #
+   # 
+   #  
+   #
+    def grafica_time(dataframe,x,y,title):
+        fig_2 = px.line(
+            dataframe,
+            x = x,
+            y = y,
+            title= title,
+            color_discrete_sequence = ["#3EC6FF"],
+            template = "plotly_white"
+        )
+        
+        fig_2.update_xaxes(
+            rangeslider_visible = True,
+            rangeselector = dict(buttons = list([dict(step = 'year' , stepmode = "backward",count = 1,label = '1 año')])),
+        )
+
+        return fig_2
+#
+#
+#
+
+    st.plotly_chart(fig)   
     
-    st.dataframe(df)
-
-    st.plotly_chart(fig_2)
-
+    col1, col2= st.columns(2)
+    st.plotly_chart(grafica_time(dataframe_año,dataframe_año.index,dataframe_año['APROBACIÓN_MEDIA'],'APROBACIÓN MEDIA'))
+    
+    with col1:
+        st.plotly_chart(grafica_time(dataframe_año,dataframe_año.index,dataframe_año['APROBACIÓN'],'APROBACIÓN'))
+        st.plotly_chart(grafica_time(dataframe_año,dataframe_año.index,dataframe_año['APROBACIÓN_PRIMARIA'],'APROBACIÓN PRIMARIA'))
+    with col2:
+        st.plotly_chart(grafica_time(dataframe_año,dataframe_año.index,dataframe_año['APROBACIÓN_TRANSICIÓN'],'APROBACIÓN TRANSICIÓN'))
+        st.plotly_chart(grafica_time(dataframe_año,dataframe_año.index,dataframe_año['APROBACIÓN_SECUNDARIA'],'APROBACIÓN SECUNDARIA'))
+        
     st.sidebar.title('📩 Contact us')
 
 else: 

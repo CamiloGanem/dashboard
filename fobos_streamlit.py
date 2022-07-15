@@ -1,11 +1,19 @@
 from email.policy import default
 from operator import index
+from optparse import Option
+from turtle import width
 import streamlit as st
 import pandas as pd
 import plotly.express as px
 import requests
+import random
 
-
+st.set_page_config(
+     page_title="DASHBOARD",
+     page_icon="🐽",
+     layout="wide",
+     initial_sidebar_state="expanded"
+ )
 
 read_col = ['AÑO','DEPARTAMENTO','MUNICIPIO','APROBACIÓN', 'APROBACIÓN_TRANSICIÓN', 'APROBACIÓN_PRIMARIA', 'APROBACIÓN_SECUNDARIA', 'APROBACIÓN_MEDIA']
 df = pd.read_csv("D:\Diplomado/MEN_ESTADISTICAS_EN_EDUCACION_EN_PREESCOLAR__B_SICA_Y_MEDIA_POR_MUNICIPIO_LIMPIO.csv" , usecols=read_col)  
@@ -40,9 +48,13 @@ def procesar_request(dataframe):
     return resultado
 
 # Using object notation
+
+st.sidebar.title('NAVEGACIÓN')
 genre_bar = st.sidebar.radio(
-            "Navigate",
-            ('Homepage','Exploracion', 'Predicción'))
+            label = 'Seleccione',
+            options = ('Homepage','Exploracion', 'Predicción')
+            )
+
 
 if genre_bar == 'Homepage':
     st.title("Estadísticas de aprobación escolar 📊 (DASHBOARD) 📊" ) 
@@ -80,80 +92,72 @@ elif genre_bar == 'Exploracion':
     # st.dataframe(df_selection)
     st.title("🔍 Exploración de datos(graficas)") 
 
+    
+
     dataframe_depatamento = (
-    df_selection.loc[:,['DEPARTAMENTO','APROBACIÓN']].groupby('DEPARTAMENTO').mean('APROBACIÓN')
-    )
-
-    fig_pequeña = px.bar(
-        dataframe_depatamento,
-        x = "APROBACIÓN",
-        y = dataframe_depatamento.index,
-        orientation = "h",
-        # height=1200, width=1000,
-        title= "<b> Nivel de aprobación a nivel departamental </b>",
-        color_discrete_sequence = ["#3EC6FF"] * len(dataframe_depatamento),
-        template = "plotly_white"
-    )
-
-    fig_pequeña.update_layout(
-        plot_bgcolor="rgba(0,0,0,0)",
-        xaxis = (dict(showgrid=False)),
-        yaxis={'categoryorder':'total ascending'}
-    )
-
-    fig_pequeña.update_xaxes(automargin=True)
-
-    fig_grande = px.bar(
-        dataframe_depatamento,
-        x = "APROBACIÓN",
-        y = dataframe_depatamento.index,
-        orientation = "h",
-        height=1200, width=1000,
-        title= "<b> Nivel de aprobación a nivel departamental </b>",
-        color_discrete_sequence = ["#3EC6FF"] * len(dataframe_depatamento),
-        template = "plotly_white"
-    )
-
-    fig_grande.update_layout(
-        plot_bgcolor="rgba(0,0,0,0)",
-        xaxis = (dict(showgrid=False)),
-        yaxis={'categoryorder':'total ascending'}
-    )
-
-    fig_grande.update_xaxes(automargin=True)
-
-    # AÑO = st.sidebar.multiselect("Selecciona los años:", options=df['AÑO'].unique() , default =df['AÑO'].unique() )
-    # df_selection_año = df.query("AÑO == @AÑO")
-
-    dataframe_año = (
-        df.loc[:,['AÑO','APROBACIÓN']].groupby('AÑO').mean('APROBACIÓN')
-        )
-
-    fig_2 = px.line(
-        dataframe_año,
-        x = dataframe_año.index,
-        y = "APROBACIÓN",
-        # height=600, width=800,
-        title= "<b> Serie de tiempo (aprobación con respecto el año) </b>",
-        color_discrete_sequence = ["#3EC6FF"] * len(dataframe_depatamento),
-        template = "plotly_white"
-    )
-       
-    fig_2.update_xaxes(
-        rangeslider_visible = True,
-        rangeselector = dict(buttons = list([dict(step = 'year' , stepmode = "backward",count = 1,label = '1 año')])),
+    df_selection.groupby(by=['DEPARTAMENTO']).mean()[['APROBACIÓN']]
     )
     
-    st.dataframe(df)
+    fig = px.bar(
+        dataframe_depatamento,
+        x = "APROBACIÓN",
+        y = dataframe_depatamento.index,
+        orientation = "h",
+        height=700, width = 1200,
+        title= "<b> Nivel de aprobación a nivel departamental </b>",
+        color_discrete_sequence = ["#3EC6FF"] * len(dataframe_depatamento),
+        template = "plotly_white"
+        )
 
-    if len(DEPARTAMENTO) > 17:
-        st.plotly_chart(fig_grande)
-    else:
-        st.plotly_chart(fig_pequeña)
+    fig.update_layout(
+        plot_bgcolor="rgba(0,0,0,0)",
+        xaxis = (dict(showgrid=False)),
+        yaxis={'categoryorder':'total ascending'}
+        )
 
-    st.plotly_chart(fig_2)
+    fig.update_xaxes(automargin=True)
 
+    dataframe_año = (
+        df.groupby(by=['AÑO']).mean()[['APROBACIÓN','APROBACIÓN_TRANSICIÓN','APROBACIÓN_PRIMARIA','APROBACIÓN_SECUNDARIA', 'APROBACIÓN_MEDIA']]
+        )
+   #
+   # 
+   #  
+   #
+    def grafica_time(dataframe,x,y,title):
+        fig_2 = px.line(
+            dataframe,
+            x = x,
+            y = y,
+            title= title,
+            color_discrete_sequence = ["#3EC6FF"],
+            template = "plotly_white"
+        )
+        
+        fig_2.update_xaxes(
+            rangeslider_visible = True,
+            rangeselector = dict(buttons = list([dict(step = 'year' , stepmode = "backward",count = 1,label = '1 año')])),
+        )
+
+        return fig_2
+#
+#
+#
+
+    st.plotly_chart(fig)   
+    
+    col1, col2= st.columns(2)
+    st.plotly_chart(grafica_time(dataframe_año,dataframe_año.index,dataframe_año['APROBACIÓN_MEDIA'],'APROBACIÓN MEDIA'))
+    
+    with col1:
+        st.plotly_chart(grafica_time(dataframe_año,dataframe_año.index,dataframe_año['APROBACIÓN'],'APROBACIÓN'))
+        st.plotly_chart(grafica_time(dataframe_año,dataframe_año.index,dataframe_año['APROBACIÓN_PRIMARIA'],'APROBACIÓN PRIMARIA'))
+    with col2:
+        st.plotly_chart(grafica_time(dataframe_año,dataframe_año.index,dataframe_año['APROBACIÓN_TRANSICIÓN'],'APROBACIÓN TRANSICIÓN'))
+        st.plotly_chart(grafica_time(dataframe_año,dataframe_año.index,dataframe_año['APROBACIÓN_SECUNDARIA'],'APROBACIÓN SECUNDARIA'))
+        
     st.sidebar.title('📩 Contact us')
+
 
 else: 
     st.sidebar.header('Ingrese los datos')  
@@ -166,9 +170,17 @@ else:
      'How would you like to be contacted?',
      (1,2,3))
 
+    def random_emoji():
+        st.session_state.emoji = random.choice(emojis)
+        
+    if "emoji" not in st.session_state:
+        st.session_state.emoji = "👌"
 
+    emojis = ["📈","📊","🔝","🍑","📸","😲"] 
 
-    if st.sidebar.button('Predicción'):
+    a = st.sidebar.button(f'Predicción {st.session_state.emoji}' , on_click = random_emoji)
+
+    if a:
         
         if selectbox_aprobacion == 'Aprobacion general':
             pred = request_api(0, selectbox_año)
@@ -196,6 +208,5 @@ else:
             st.text(procesar_request(pred))
 
         st.snow()
-    else:
-        st.write('Goodbye')
+   
     
