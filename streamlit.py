@@ -2,7 +2,35 @@ from email.policy import default
 import streamlit as st
 import pandas as pd
 import plotly.express as px
+import requests
 
+def procesar_request(dataframe):
+    dataframe['years'] = pd.to_datetime(dataframe['years']).dt.year
+    años = dataframe['years']
+    aprobaciones = dataframe['aprobacion'].round(2)
+    col1, col2, col3 = st.columns(3)
+    resultado = ""
+    for p in range(len(años)):
+        if p == 0:
+            col1.metric('Año '+str(años[0]), str(aprobaciones[0])+'%')
+        elif p == 1:
+            col2.metric('Año '+str(años[1]), str(aprobaciones[1])+'%')
+        elif p == 2:
+            col3.metric('Año '+str(años[2]), str(aprobaciones[2])+'%')
+    return resultado
+
+def request_api(tipo_aprobacion, years):
+  request_data = {"tipo_aprobacion": tipo_aprobacion,
+                     "years": years}
+
+  data_cleaned = str(request_data).replace("'", '"')
+
+  url_api = "https://api-modelos-aprobacion.herokuapp.com/predict"
+
+  pred = requests.post(url=url_api, data=data_cleaned).text
+
+  pred_df = pd.read_json(pred)
+  return pred_df
 
 
 read_col = ['AÑO','DEPARTAMENTO','MUNICIPIO','APROBACIÓN', 'APROBACIÓN_TRANSICIÓN', 'APROBACIÓN_PRIMARIA', 'APROBACIÓN_SECUNDARIA', 'APROBACIÓN_MEDIA']
@@ -11,8 +39,9 @@ df = pd.read_csv("https://raw.githubusercontent.com/JJPC98/DiplomadoPython/main/
 # Using object notation
 genre_bar = st.sidebar.radio(
             "Navigate",
-            ('Homepage','Exploracion'))
+            ('Homepage','Exploracion', 'Prediccion'))
 
+#HOMEPAGE SELECCIONADO
 if genre_bar == 'Homepage':
     st.title("Estadísticas de aprobación escolar 📊 (DASHBOARD) 📊" ) 
     st.write('📌 ABOUT US')
@@ -40,8 +69,45 @@ if genre_bar == 'Homepage':
     if agree_describe: 
         st.write(df.describe())
 
-else:
+       
+elif genre_bar == 'Prediccion':
+    
+    st.header('🔮Prediccion de aprobacion')
+    st.sidebar.title('Selccione los datos para su prediccion')
+    c1, c2= st.columns(2)
+    aprobacion_options = c1.selectbox('Seleccione la aprobacion',('Aprobacion general', 'Aprobacion media', 'Aprobacion primaria', 'Aprobacion secundaria', 'Aprobacion transicion'))
+    num_años = c2.selectbox('Seleccione numero de años', (1,2,3))
+    btn_predecir = st.button('Predecir aprobacion')
+    
+    if btn_predecir:
+        if aprobacion_options == 'Aprobacion general':
+            pred = request_api(0, num_años)
+            st.text('Para la Aprobacion general')
+            st.text(procesar_request(pred))    
 
+        elif aprobacion_options == 'Aprobacion media':
+            pred = request_api(1, num_años)
+            st.text('Para la Aprobacion en media')
+            st.text(procesar_request(pred))
+
+        elif aprobacion_options == 'Aprobacion primaria':
+            pred = request_api(2, num_años)
+            st.text('Para la Aprobacion en primaria')
+            st.text(procesar_request(pred))
+
+        elif aprobacion_options == 'Aprobacion secundaria':
+            pred = request_api(3, num_años)
+            st.text('Para la Aprobacion en secundaria')
+            st.text(procesar_request(pred))
+
+        elif aprobacion_options == 'Aprobacion transicion':
+            pred = request_api(4, num_años)
+            st.text('Para la Aprobacion en transicion')
+            st.text(procesar_request(pred))
+
+        st.snow()
+
+else:
     st.sidebar.header('Ingrese los datos')
     DEPARTAMENTO = st.sidebar.multiselect("Selecciona departamento:", options=df['DEPARTAMENTO'].unique() , default =df['DEPARTAMENTO'].unique() )
     df_selection = df.query("DEPARTAMENTO == @DEPARTAMENTO")
@@ -87,6 +153,7 @@ else:
     st.plotly_chart(fig_2)
 
     st.sidebar.title('📩 Contact us')
+    st.wride('camiloganemortega@gmail.com')
 
 
 
