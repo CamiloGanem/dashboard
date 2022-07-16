@@ -208,8 +208,18 @@ elif genre_bar == 'Predicción':
             st.text(procesar_request(pred))
 else:
     st.header('Contactos')
-    st.markdown('<p>Yessica Durango: Ydurangogarces31@correo.unicordoba.edu.co</p>', unsafe_allow_html=True)
-    st.markdown('<p>Camilo Ganem: <a href="https://github.com/CamiloGanem" target="_blank">GitHub</a>, camiloganemortega@gmail.com</p>', unsafe_allow_html=True)
-    st.markdown('<p>Jeremias Palacio: <a href="https://github.com/JJPC98" target="_blank">GitHub</a>, jeremiasjosuepc@gmail.com</p>', unsafe_allow_html=True)
-    st.markdown('<p>Juan Ramos: <a href="https://github.com/FobosAwAS" target="_blank">GitHub</a>, juanramossc.741@gmail.com</p>', unsafe_allow_html=True)
-    st.markdown('<p>Jesus Hoyos: elyisus@gmail.com</p>', unsafe_allow_html=True)
+    """
+    **Juan Carlos Ramos:** [![ Seguir](https://img.shields.io/twitter/follow/juanramossc?style=social)](https://twitter.com/JuanRamossC)   [![Star](https://img.shields.io/badge/perfil-FobosAwAs-yellow?style=social&logo=github)](https://github.com/FobosAwAS)
+    """
+    """
+    **Jeremías Palacio Cuyan:** [![ Seguir](https://img.shields.io/badge/perfil-JJPC98-yellow?style=social&logo=instagram)](https://www.instagram.com/jjpc98/)   [![Star](https://img.shields.io/badge/perfil-JJPC98-yellow?style=social&logo=github)](https://github.com/JJPC98)
+    """
+    """
+    **Jesus David Hoyos:** [![ Seguir](https://img.shields.io/badge/perfil-jesushoyos_01-yellow?style=social&logo=instagram)](https://www.instagram.com/jesushoyos_01/)   [![Star](https://img.shields.io/badge/perfil-JesusHoyos05-yellow?style=social&logo=github)](https://github.com/JesusHoyos05)
+    """
+    """ 
+    **Camilo Ganem Ortega:** [![ Seguir](https://img.shields.io/twitter/follow/camilo_ganem?style=social)](https://twitter.com/camilo_ganem)   [![Star](https://img.shields.io/badge/perfil-CamiloGanem-yellow?style=social&logo=github)](https://github.com/CamiloGanem)
+    """
+    """
+    **Yessica Durango Garces:** [![ Seguir](https://img.shields.io/badge/perfil-YessicaD-yellow?style=social&logo=facebook)](https://www.facebook.com/yessicayulieth.durangogarces)
+    """
