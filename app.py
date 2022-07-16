@@ -56,8 +56,8 @@ df = cargar_datos().copy()
 with st.sidebar: 
     genre_bar = option_menu(
         menu_title = "NAVEGACIÓN",
-        options = ['Página principal','Exploración', 'Predicción'],
-        icons =["house", "search","cpu"],
+        options = ['Página principal','Exploración', 'Predicción', 'Contáctanos'],
+        icons =["house", "search","cpu", "chat-text-fill"],
         menu_icon = "cast",
         default_index =0
     )
@@ -166,10 +166,8 @@ elif genre_bar == 'Exploración':
         st.markdown('<p style="text-align: left; padding-left: 50px;"><b>Aprobación Transición:</b> La grafica de aprobación estudiantil en el nivel educativo "Transición" con respecto a los años (2011 – 2020) muestra su pico más alto en el año 2014 con un 97.7%, así mismo su punto más bajo fue en el 2012 con un 95.8%</p>', unsafe_allow_html=True)
         st.plotly_chart(grafica_time(dataframe_año,dataframe_año.index,dataframe_año['APROBACIÓN_SECUNDARIA'],'APROBACIÓN SECUNDARIA'))
         st.markdown('<p style="text-align: left; padding-left: 50px;"><b>Aprobación Secundaria:</b> La grafica de aprobación estudiantil en el nivel educativo “Secundaria” con respecto a los años (2011 – 2020) muestra su pico más alto en el año 2014 con un 93.6%, así mismo el punto más bajo fue en el 2020 con un 86.9%</p>', unsafe_allow_html=True)
-        
-    st.sidebar.title('📩 Contact us')
 
-else: 
+elif genre_bar == 'Predicción':
     st.sidebar.header('Ingrese los datos')  
     selectbox_aprobacion = st.sidebar.selectbox(
      'Seleccione la aprobación',
@@ -208,4 +206,5 @@ else:
             pred = request_api(4, selectbox_año)
             st.markdown('**Para la aprobación en transición**')
             st.text(procesar_request(pred))
-        
+else:
+    st.header('Contactos')
