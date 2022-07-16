@@ -208,3 +208,4 @@ elif genre_bar == 'Predicción':
             st.text(procesar_request(pred))
 else:
     st.header('Contactos')
+    st.markdown('<a href="camiloganemortega@gmail.com" target="_blank">camiloganemortega@gmail.com</a>', unsafe_allow_html=True)
