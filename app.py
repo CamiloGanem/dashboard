@@ -57,13 +57,9 @@ with st.sidebar:
     genre_bar = option_menu(
         menu_title = "NAVEGACIÓN",
         options = ['Página principal','Exploración', 'Predicción'],
-<<<<<<< HEAD
         icons =["house", "search","cpu"],
-=======
-        icons =["house", "search", "cpu"],
->>>>>>> d5daced319aea39a0aac08b92f9c0ebd6775e880
         menu_icon = "cast",
-        default_index =0,
+        default_index =0
     )
 
 
@@ -154,7 +150,7 @@ elif genre_bar == 'Exploración':
 
     st.plotly_chart(fig)   
 
-    st.header('Graficas aprobacion a nivel nacional (2011 - 2020)')
+    st.header('Graficas aprobación a nivel nacional (2011 - 2020)')
     
     col1, col2= st.columns(2)
     st.plotly_chart(grafica_time(dataframe_año,dataframe_año.index,dataframe_año['APROBACIÓN_MEDIA'],'APROBACIÓN MEDIA'))
