@@ -148,13 +148,18 @@ elif genre_bar == 'Exploracion':
     
     col1, col2= st.columns(2)
     st.plotly_chart(grafica_time(dataframe_año,dataframe_año.index,dataframe_año['APROBACIÓN_MEDIA'],'APROBACIÓN MEDIA'))
+    st.write('Aprobación Media: La grafica de aprobación estudiantil en el nivel educativo “Media” con respecto a los años (2011 – 2020) muestra su pico más alto en el año 2014 con un 95.4%, así mismo su punto más bajo fue en el 2020 con un 89.7%')
     
     with col1:
         st.plotly_chart(grafica_time(dataframe_año,dataframe_año.index,dataframe_año['APROBACIÓN'],'APROBACIÓN'))
+        st.write('Aprobación: La grafica de aprobación estudiantil "General" con respecto a los años (2011 - 2020) muestra su pico mas alto en el año 2014 con un 95.3%, así mismo el punto más bajo fue en el 2020 con un 90.7%')
         st.plotly_chart(grafica_time(dataframe_año,dataframe_año.index,dataframe_año['APROBACIÓN_PRIMARIA'],'APROBACIÓN PRIMARIA'))
+        st.write('Aprobación Primaria: La grafica de aprobación estudiantil en el nivel educativo “Primaria” con respecto a los años (2011 – 2020) muestra su pico más alto en el año 2014 con un 96.1%, así mismo su punto más bajo fue en el 2020 con un 93.3')
     with col2:
         st.plotly_chart(grafica_time(dataframe_año,dataframe_año.index,dataframe_año['APROBACIÓN_TRANSICIÓN'],'APROBACIÓN TRANSICIÓN'))
+        st.write('Aprobación Transición: La grafica de aprobación estudiantil en el nivel educativo "Transición" con respecto a los años (2011 – 2020) muestra su pico más alto en el año 2014 con un 97.7%, así mismo su punto más bajo fue en el 2012 con un 95.8%')
         st.plotly_chart(grafica_time(dataframe_año,dataframe_año.index,dataframe_año['APROBACIÓN_SECUNDARIA'],'APROBACIÓN SECUNDARIA'))
+        st.write('Aprobación Secundaria: La grafica de aprobación estudiantil en el nivel educativo “Secundaria” con respecto a los años (2011 – 2020) muestra su pico más alto en el año 2014 con un 93.6%, así mismo el punto más bajo fue en el 2020 con un 86.9% ')
         
     st.sidebar.title('📩 Contact us')
 
@@ -170,17 +175,17 @@ else:
      'How would you like to be contacted?',
      (1,2,3))
 
-    def random_emoji():
-        st.session_state.emoji = random.choice(emojis)
+    # def random_emoji():
+    #     st.session_state.emoji = random.choice(emojis)
         
-    if "emoji" not in st.session_state:
-        st.session_state.emoji = "👌"
+    # if "emoji" not in st.session_state:
+    #     st.session_state.emoji = "👌"
 
-    emojis = ["📈","📊","🔝","🍑","📸","😲"] 
+    # emojis = ["📈","📊","🔝","🍑","📸","😲"] 
 
-    a = st.sidebar.button(f'Predicción {st.session_state.emoji}' , on_click = random_emoji)
-
-    if a:
+    
+    
+    if st.sidebar.button('Predicción'):
         
         if selectbox_aprobacion == 'Aprobacion general':
             pred = request_api(0, selectbox_año)
