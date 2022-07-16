@@ -208,7 +208,7 @@ elif genre_bar == 'Predicción':
             st.text(procesar_request(pred))
 else:
     st.header('Contactos')
-    st.markdown('<p>Yessica Durango: </p>', unsafe_allow_html=True)
+    st.markdown('<p>Yessica Durango: Ydurangogarces31@correo.unicordoba.edu.co</p>', unsafe_allow_html=True)
     st.markdown('<p>Camilo Ganem: <a href="https://github.com/CamiloGanem" target="_blank">GitHub</a>, camiloganemortega@gmail.com</p>', unsafe_allow_html=True)
     st.markdown('<p>Jeremias Palacio: <a href="https://github.com/JJPC98" target="_blank">GitHub</a>, jeremiasjosuepc@gmail.com</p>', unsafe_allow_html=True)
     st.markdown('<p>Juan Ramos: <a href="https://github.com/FobosAwAS" target="_blank">GitHub</a>, juanramossc.741@gmail.com</p>', unsafe_allow_html=True)
