@@ -57,7 +57,11 @@ with st.sidebar:
     genre_bar = option_menu(
         menu_title = "NAVEGACIÓN",
         options = ['Página principal','Exploración', 'Predicción'],
+<<<<<<< HEAD
         icons =["house", "search","cpu"],
+=======
+        icons =["house", "search", "cpu"],
+>>>>>>> d5daced319aea39a0aac08b92f9c0ebd6775e880
         menu_icon = "cast",
         default_index =0,
     )
